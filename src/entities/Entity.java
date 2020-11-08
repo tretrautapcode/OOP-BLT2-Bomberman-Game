@@ -1,25 +1,36 @@
 package entities;
 
 import control.BombermanGame;
-import entities.dow.Grass;
-import javafx.scene.SnapshotParameters;
-
+import control.Setting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 import graphics.Sprite;
 
+import java.util.Set;
+
 public abstract class Entity {
+    protected int animation = 0;
     protected double x;
     protected double y;
-    protected double speed = 1;
-    protected Image img;
+    protected double speed = 0.0625;
+    protected double dx = 0;
+    protected double dy = 0;
+    protected ImageView img;
 
     public Entity(double x, double y, Image img) {
         this.x = x;
         this.y = y;
-        this.img = img;
+        this.img = new ImageView(img);
+    }
+
+
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
     }
 
     public double getY() {
@@ -30,35 +41,54 @@ public abstract class Entity {
         return x;
     }
 
+    public void addToPane() {
+        BombermanGame.playerPane.getChildren().add(img);
+    }
+
     public void render() {
-
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-
-        ImageView iv = new ImageView(img);
-        Image base = iv.snapshot(params, null);
-
-        BombermanGame.gc.drawImage(base, x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE);
+        double u= BombermanGame.player.x;
+        double v= BombermanGame.player.y;
+        u=u- Setting.WIDTH/2;
+        v=v-Setting.HEIGHT/2;
+        u=Math.min(u,Setting.L-Setting.WIDTH);
+        v=Math.min(v,Setting.R-Setting.HEIGHT);
+        u=Math.max(u,0);
+        v=Math.max(v,0);
+        img.relocate((x-u) * Sprite.SCALED_SIZE, (y-v) * Sprite.SCALED_SIZE);
     }
 
     public abstract void update();
-
-    public void Animation(Sprite x1, Sprite x2, Sprite x3, double dx, double dy, int time) {
-        new Grass((int) x, (int) y, Sprite.grass.getFxImage()).render();
-        Sprite sprite = Sprite.movingSprite(x1, x2, x3, BombermanGame.animation, time);
-        img = sprite.getFxImage();
-        x += dx;
-        y += dy;
-        render();
+    public boolean intersect(Entity entity){
+        double _x=x+dx*speed;
+        double _y=y+dy*speed;
+        if (_x+1<=entity.getX())return false;
+        if (entity.getX()+1<=_x)return false;
+        if (_y+1<=entity.getY())return false;
+        if (entity.getY()+1<=_y)return false;
+        return true;
     }
-
-    public void Animation(Sprite x1, Sprite x2, double dx, double dy, int time) {
-        new Grass((int) x, (int) y, Sprite.grass.getFxImage()).render();
-        Sprite sprite = Sprite.movingSprite(x1, x2, BombermanGame.animation, time);
-        img = sprite.getFxImage();
-        x += dx;
-        y += dy;
-        new Grass((int) x, (int) y, Sprite.grass.getFxImage()).render();
-        render();
+    public double formatY()
+    {
+        if (y - (int) y <= Setting.exp) {
+            return (int) y;
+        }
+        if (y - (int) y > 1 - Setting.exp) {
+            return (int) y + 1;
+        }
+        return y;
+    }
+    public double formatX()
+    {
+        if (x - (int) x <= Setting.exp) {
+            return (int) x;
+        }
+        if (x - (int) x > 1 - Setting.exp) {
+            return (int)x + 1;
+        }
+        return x;
+    }
+    public void updateAnimation() {
+        animation++;
+        if (animation > 1000000) animation = 0;
     }
 }
