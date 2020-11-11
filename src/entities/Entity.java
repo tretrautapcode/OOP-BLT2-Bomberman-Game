@@ -7,15 +7,9 @@ import javafx.scene.image.ImageView;
 
 import graphics.Sprite;
 
-import java.util.Set;
-
 public abstract class Entity {
-    protected int animation = 0;
     protected double x;
     protected double y;
-    protected double speed = 0.0625;
-    protected double dx = 0;
-    protected double dy = 0;
     protected ImageView img;
 
     public Entity(double x, double y, Image img) {
@@ -25,24 +19,12 @@ public abstract class Entity {
     }
 
 
-    public void setDx(double dx) {
-        this.dx = dx;
-    }
-
-    public void setDy(double dy) {
-        this.dy = dy;
-    }
-
     public double getY() {
         return y;
     }
 
     public double getX() {
         return x;
-    }
-
-    public void addToPane() {
-        BombermanGame.playerPane.getChildren().add(img);
     }
 
     public void render() {
@@ -58,37 +40,17 @@ public abstract class Entity {
     }
 
     public abstract void update();
-    public boolean intersect(Entity entity){
-        double _x=x+dx*speed;
-        double _y=y+dy*speed;
-        if (_x+1<=entity.getX())return false;
-        if (entity.getX()+1<=_x)return false;
-        if (_y+1<=entity.getY())return false;
-        if (entity.getY()+1<=_y)return false;
+    public void remove() {
+        BombermanGame.playerPane.getChildren().remove(img);
+    }
+    public void addToPane(){
+        BombermanGame.playerPane.getChildren().add(img);
+    }
+    public boolean intersect(Entity entity) {
+        if (x + 1 <= entity.x) return false;
+        if (entity.getX() + 1 <= x) return false;
+        if (y + 1 <= entity.y) return false;
+        if (entity.y + 1 <= y) return false;
         return true;
-    }
-    public double formatY()
-    {
-        if (y - (int) y <= Setting.exp) {
-            return (int) y;
-        }
-        if (y - (int) y > 1 - Setting.exp) {
-            return (int) y + 1;
-        }
-        return y;
-    }
-    public double formatX()
-    {
-        if (x - (int) x <= Setting.exp) {
-            return (int) x;
-        }
-        if (x - (int) x > 1 - Setting.exp) {
-            return (int)x + 1;
-        }
-        return x;
-    }
-    public void updateAnimation() {
-        animation++;
-        if (animation > 1000000) animation = 0;
     }
 }

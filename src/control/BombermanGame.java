@@ -1,7 +1,15 @@
 package control;
 
+import entities.DestroyAble.Character.Balloom;
+import entities.DestroyAble.Character.Bomber;
+import entities.DestroyAble.Character.Oneal;
+import entities.DestroyAble.Bomb;
+import entities.DestroyAble.Brick;
+import entities.DestroyAble.Flame;
+import entities.Item.BombItem;
+import entities.Item.FlameItem;
+import entities.Item.SpeedItem;
 import entities.StillEntity.*;
-import entities.MovedEntity.*;
 import graphics.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -25,6 +33,7 @@ public class BombermanGame extends Application {
     public static List<Balloom>ballooms=new ArrayList<>();
     public static List<Oneal>oneals=new ArrayList<>();
     public static List<Portal>portals=new ArrayList<>();
+    public static List<Flame>flames=new ArrayList<>();
     public static List<FlameItem>flameItems=new ArrayList<>();
     public static List<SpeedItem>speedItems=new ArrayList<>();
     public static List<BombItem>bombItems=new ArrayList<>();
@@ -38,6 +47,7 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) {
         playerPane = new Pane();
+        playerPane.setStyle("-fx-background-color: black;");
         Group root = new Group();
         root.getChildren().addAll(playerPane);
         scene = new Scene(root, Sprite.SCALED_SIZE * Setting.WIDTH, Sprite.SCALED_SIZE * Setting.HEIGHT);
@@ -51,6 +61,9 @@ public class BombermanGame extends Application {
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if(player.checkDestroy()){
+                    stop();
+                }
                 update();
                 render();
             }
@@ -81,6 +94,7 @@ public class BombermanGame extends Application {
                         walls.add(new Wall(j, i, Sprite.wall.getFxImage()));
                         break;
                     case '*':
+                        grasses.add(new Grass(j,i,Sprite.grass.getFxImage()));
                         bricks.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 'x':
@@ -120,8 +134,51 @@ public class BombermanGame extends Application {
 
     public void update() {
         player.update();
-        ballooms.forEach(g->g.update());
-        oneals.forEach(g->g.update());
+        for (int i=0;i<ballooms.size();)
+        {
+            ballooms.get(i).update();
+            if (ballooms.get(i).checkDestroy()) {
+                ballooms.remove(i);
+            }else {
+                i++;
+            }
+        }
+        for (int i=0;i<oneals.size();)
+        {
+            oneals.get(i).update();
+            if (oneals.get(i).checkDestroy()) {
+                oneals.remove(i);
+            }else {
+                i++;
+            }
+        }
+        for (int i=0;i<bricks.size();)
+        {
+            bricks.get(i).update();
+            if(bricks.get(i).checkDestroy()){
+                bricks.remove(i);
+            }else {
+                i++;
+            }
+        }
+        for (int i=0;i<bombs.size();)
+        {
+            bombs.get(i).update();
+            if(bombs.get(i).checkDestroy()){
+                bombs.remove(i);
+            }else {
+                i++;
+            }
+        }
+        for (int i=0;i<flames.size();)
+        {
+            flames.get(i).update();
+            if(flames.get(i).checkDestroy()){
+                flames.remove(i);
+            }else {
+                i++;
+            }
+        }
     }
 
     public void addToPane(Pane pane) {
@@ -148,6 +205,7 @@ public class BombermanGame extends Application {
         oneals.forEach(g->g.render());
         bricks.forEach(g -> g.render());
         bombs.forEach(g->g.render());
+        flames.forEach(g->g.render());
         player.render();
     }
 }
