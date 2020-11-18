@@ -1,5 +1,6 @@
 package entities.DestroyAble.Character;
 
+import control.BombermanGame;
 import control.Setting;
 import graphics.Sprite;
 import javafx.scene.image.Image;
@@ -20,6 +21,9 @@ public class Oneal extends Character {
                 this.remove();
             }
         } else {
+            if(intersect(BombermanGame.player)){
+                BombermanGame.player.setIsDestroy(true);
+            }
             move();
         }
     }
