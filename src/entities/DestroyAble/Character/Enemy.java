@@ -3,6 +3,8 @@ package entities.DestroyAble.Character;
 import control.MyList;
 import javafx.scene.image.Image;
 
+import java.util.Random;
+
 public class Enemy extends Character {
     public Enemy(double x, double y, Image img, long nanoSecond) {
         super(x, y, img, nanoSecond);
@@ -46,5 +48,29 @@ public class Enemy extends Character {
             return false;
         }
         return true;
+    }
+    public void randomMove()
+    {
+        if (!isMoving||checkInt()) {
+            isMoving=true;
+            Random rnd = new Random();
+            int random = rnd.nextInt(4);
+            if (random==0) {
+                dx = 1;
+                dy = 0;
+            }
+            if (random==1) {
+                dx = 0;
+                dy = 1;
+            }
+            if (random==2) {
+                dx = -1;
+                dy = 0;
+            }
+            if (random==3) {
+                dx = 0;
+                dy = -1;
+            }
+        }
     }
 }
