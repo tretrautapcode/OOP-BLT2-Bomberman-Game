@@ -20,6 +20,9 @@ public abstract class Character extends DestroyAble {
     @Override
     public abstract void update();
 
+    public void addSpeed(){
+        speed=speed+Setting.speedAdd;
+    }
     public void setDx(double dx) {
         this.dx = dx;
     }

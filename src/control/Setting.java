@@ -14,4 +14,8 @@ public class Setting {
     public static final long timeBrickDestroy=500_000_000;// đơn vị nano giây
     public static final long timeFlameDestroy=500_000_000;// đơn vị nano giây
     public static int sizeBomb=1;
+    public static double speedAdd=0.02;
+    public static double speedBomber=0.05;
+    public static double speedBallom=0.02;
+    public static double speedOneal=0.05;
 }

@@ -11,7 +11,7 @@ public class Balloom extends Enemy {
         super(x, y, img, Setting.timeEnemyDestroy);
         dx = -1;
         dy = 0;
-        speed = 0.02;
+        speed = Setting.speedBallom;
     }
 
     @Override

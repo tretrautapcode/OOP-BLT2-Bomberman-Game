@@ -16,7 +16,7 @@ public class Bomber extends Character {
     private int countBomb=0;
     public Bomber(double x, double y, Image img) {
         super(x, y, img, Setting.timeBomberDestroy);
-        speed = 0.0625;
+        speed = Setting.speedBomber;
     }
 
     @Override

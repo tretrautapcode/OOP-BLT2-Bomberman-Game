@@ -18,7 +18,7 @@ public class Oneal extends Enemy {
         super(x, y, img, Setting.timeEnemyDestroy);
         dx = 0;
         dy = 0;
-        speed = 0.05;
+        speed = Setting.speedOneal;
     }
 
     @Override
@@ -55,14 +55,14 @@ public class Oneal extends Enemy {
         int X;
         int Y;
         if (checkInt()) {
-            if (intX + 1 - x < speed) {
+            if (intX + 1 - x <= speed) {
                 intX = intX + 1;
             }
-            if (intY + 1 - y < speed) {
+            if (intY + 1 - y <= speed) {
                 intY = intY + 1;
             }
             if (f[intX][intY] != -1) {
-                speed=0.05;
+                speed=Setting.speedOneal;
                 for (int i = 0; i < 4; ++i) {
                     X = intX + Dx[i];
                     Y = intY + Dy[i];
@@ -72,7 +72,7 @@ public class Oneal extends Enemy {
                     }
                 }
             }else{
-                speed=0.02;
+                speed=Setting.speedBallom;
                 randomMove();
             }
         }

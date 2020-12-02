@@ -1,5 +1,6 @@
 package entities.Item;
 
+import control.MyList;
 import javafx.scene.image.Image;
 
 public class SpeedItem extends Item{
@@ -9,6 +10,10 @@ public class SpeedItem extends Item{
 
     @Override
     public void update() {
-
+        if(intersect(MyList.player)){
+            MyList.player.addSpeed();
+            setIsDestroy(true);
+            remove();
+        }
     }
 }
