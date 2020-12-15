@@ -19,7 +19,7 @@ public class Balloom extends Character {
         if (getIsDestroy()) {
             img.setImage(Sprite.balloom_dead.getFxImage());
             if(checkDestroy()) {
-                this.remove();
+                destroy();
             }
         } else {
             if(intersect(BombermanGame.player)){

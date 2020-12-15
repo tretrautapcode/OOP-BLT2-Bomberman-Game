@@ -1,5 +1,6 @@
 package entities.DestroyAble;
 
+import control.Audio;
 import entities.Entity;
 import graphics.Sprite;
 import javafx.scene.image.Image;

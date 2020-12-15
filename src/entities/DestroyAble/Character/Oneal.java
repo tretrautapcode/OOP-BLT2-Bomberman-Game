@@ -1,5 +1,6 @@
 package entities.DestroyAble.Character;
 
+import control.Audio;
 import control.BombermanGame;
 import control.Setting;
 import graphics.Sprite;
@@ -18,7 +19,7 @@ public class Oneal extends Character {
         if (getIsDestroy()) {
             img.setImage(Sprite.oneal_dead.getFxImage());
             if(checkDestroy()) {
-                this.remove();
+                destroy();
             }
         } else {
             if(intersect(BombermanGame.player)){

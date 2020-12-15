@@ -14,19 +14,22 @@ public class Support {
         }
         return null;
     }
-    public static Entity get(int x,int y){
+
+    public static Entity get(int x,int y) {
         Entity entity=search(x,y,BombermanGame.bricks);
         if(entity!=null)return entity;
         return search(x,y,BombermanGame.walls);
     }
-    public static boolean isWall(int x,int y){
+
+    public static boolean isWall(int x,int y) {
         return search(x,y,BombermanGame.walls)!=null;
     }
-    public static boolean isBrick(int x,int y){
+
+    public static boolean isBrick(int x,int y) {
         return search(x,y,BombermanGame.bricks)!=null;
     }
-    public static Brick getBrick(int x,int y)
-    {
+
+    public static Brick getBrick(int x,int y) {
         return (Brick)search(x,y,BombermanGame.bricks);
     }
 }

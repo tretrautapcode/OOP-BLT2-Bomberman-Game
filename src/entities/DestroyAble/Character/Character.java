@@ -1,5 +1,6 @@
 package entities.DestroyAble.Character;
 
+import control.Audio;
 import control.BombermanGame;
 import control.Setting;
 import entities.DestroyAble.Bomb;
@@ -103,5 +104,10 @@ public abstract class Character extends DestroyAble {
         if (_y + 1 <= entity.getY()) return false;
         if (entity.getY() + 1 <= _y) return false;
         return true;
+    }
+
+    public void destroy() {
+        Audio.entityDeathSound();
+        remove();
     }
 }

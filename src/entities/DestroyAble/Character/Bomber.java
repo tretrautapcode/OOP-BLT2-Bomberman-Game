@@ -1,6 +1,6 @@
 package entities.DestroyAble.Character;
 
-
+import control.Audio;
 import control.BombermanGame;
 import control.Setting;
 import entities.DestroyAble.Bomb;
@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 public class Bomber extends Character {
     private boolean isMoving = false;
     private int maxCountBombs = 1;//số bomb tối đa có thể đặt
+    private int time = 10;
 
     public Bomber(double x, double y, Image img) {
         super(x, y, img, Setting.timeBomberDestroy);
@@ -27,8 +28,8 @@ public class Bomber extends Character {
         BombermanGame.playerPane.getChildren().add(img);
         if (getIsDestroy()) {
             Animation(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, 30);
-            if (checkDestroy()){
-                this.remove();
+            if (checkDestroy()) {
+                destroy();
             }
         } else {
             move();
@@ -75,6 +76,12 @@ public class Bomber extends Character {
         if (dy == -1) {
             Animation(Sprite.player_up_1, Sprite.player_up_2, 12);
         }
+        time--;
+
+        if (time<=0 && checkMove()) {
+            Audio.move();
+            time = 25;
+        }
     }
 
     public boolean checkBomb() {
@@ -117,6 +124,7 @@ public class Bomber extends Character {
             public void handle(KeyEvent event) {
                 isMoving = false;
                 if (event.getCode() == KeyCode.SPACE && BombermanGame.bombs.size() < maxCountBombs) {
+                    Audio.placeBomb();
                     Bomb bomb = new Bomb((int) (x * 2) - (int) x, (int) (y * 2) - (int) y, Sprite.bomb.getFxImage());
                     bomb.addToPane();
                     BombermanGame.bombs.add(bomb);

@@ -1,5 +1,6 @@
 package entities.DestroyAble;
 
+import control.Audio;
 import control.BombermanGame;
 import control.Setting;
 import control.Support;
@@ -36,6 +37,7 @@ public class Bomb extends DestroyAble {
         Flame flame = new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0);
         BombermanGame.flames.add(flame);
         flame.addToPane();
+        Audio.bombExplode();
         for (int i = 1; i <= size; ++i) {
             if (i == size) {
                 destroyBrick((int) x - size, (int) y, Sprite.explosion_horizontal, 1);
