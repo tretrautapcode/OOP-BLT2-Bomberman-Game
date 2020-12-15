@@ -14,7 +14,8 @@ import javafx.scene.input.KeyCode;
 
 public class Bomber extends Character {
     private int maxCountBomb = 1;//số bomb tối đa có thể đặt
-    private int countBomb=0;
+    private int countBomb = 0;
+
     public Bomber(double x, double y, Image img) {
         super(x, y, img, Setting.timeBomberDestroy);
         speed = Setting.speedBomber;
@@ -28,26 +29,29 @@ public class Bomber extends Character {
             Animation(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, 30);
             if (checkDestroy()) {
                 this.remove();
-                Audio.bomberDeathSound();
+                BombermanGame.Lose();
             }
         } else {
             move();
         }
     }
-    public int getMaxCountBombs(){
+
+    public int getMaxCountBombs() {
         return maxCountBomb;
     }
 
     public void setMaxCountBomb(int maxCountBomb) {
         this.maxCountBomb = maxCountBomb;
     }
-    private int time=25;
+
+    private int time = 25;
+
     public boolean move() {
-        if(super.move()){
+        if (super.move()) {
             time--;
-            if(time==0) {
+            if (time == 0) {
                 Audio.move();
-                time=25;
+                time = 25;
             }
         }
         if (!isMoving) {
@@ -83,9 +87,10 @@ public class Bomber extends Character {
         }
         return true;
     }
-    public boolean checkBomb(int _x,int _y) {
-        Bomb bomb=MyList.getBomb(_x,_y);
-        if(bomb==null){
+
+    public boolean checkBomb(int _x, int _y) {
+        Bomb bomb = MyList.getBomb(_x, _y);
+        if (bomb == null) {
             return false;
         }
         return bomb.getOke();
@@ -112,7 +117,7 @@ public class Bomber extends Character {
         });
         BombermanGame.scene.setOnKeyReleased(event -> {
             isMoving = false;
-            if (event.getCode() == KeyCode.SPACE&&countBomb<maxCountBomb) {
+            if (event.getCode() == KeyCode.SPACE && countBomb < maxCountBomb) {
                 Audio.placeBomb();
                 Bomb bomb = new Bomb((int) (x * 2) - (int) x, (int) (y * 2) - (int) y, Sprite.bomb.getFxImage());
                 bomb.addToPane();

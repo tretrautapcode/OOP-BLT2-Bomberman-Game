@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Audio {
 
-    Clip backgroundMusic;
+    static Clip backgroundMusic;
 
     private static boolean isPlaying = true;
 
@@ -31,7 +31,7 @@ public class Audio {
         return isPlaying;
     }
 
-    public void playBackground() {
+    public static void playBackground() {
         if (!isPlaying) {
             return;
         }
@@ -52,7 +52,7 @@ public class Audio {
         }
     }
 
-    public void stopBackground() {
+    public static void stopBackground() {
         if (!isPlaying) {
             return;
         }

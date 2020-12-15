@@ -24,11 +24,11 @@ public class Balloom extends Enemy {
     }
 
     public boolean move() {
-        if (dx == 1||dy==1) {
+        if (dx == 1 || dy == 1) {
             Animation(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, 30);
 
         }
-        if (dx == -1||dy==-1) {
+        if (dx == -1 || dy == -1) {
             Animation(Sprite.balloom_left1, Sprite.balloom_left2, Sprite.balloom_left3, 30);
         }
         return super.move();

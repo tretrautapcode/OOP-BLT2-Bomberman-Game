@@ -1,6 +1,7 @@
 package entities.StillEntity;
 
 import control.Audio;
+import control.BombermanGame;
 import control.MyList;
 import entities.Entity;
 import javafx.scene.image.Image;
@@ -13,8 +14,7 @@ public class Portal extends Entity {
     @Override
     public void update() {
         if (intersect(MyList.player) && MyList.oneals.size() + MyList.ballooms.size() == 0) {
-            Audio.victory();
-            Audio.setIsPlaying(false);
+            MyList.loadMap();
         }
     }
 }

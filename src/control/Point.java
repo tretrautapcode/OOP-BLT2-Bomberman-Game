@@ -3,17 +3,21 @@ package control;
 public class Point {
     private int x;
     private int y;
-    public Point(){
+
+    public Point() {
 
     }
-    public Point(Point u){
-        x= u.x;
-        y= u.y;
+
+    public Point(Point u) {
+        x = u.x;
+        y = u.y;
     }
-    public Point(int x,int y){
-        this.x=x;
-        this.y=y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
+
     public int getX() {
         return x;
     }
