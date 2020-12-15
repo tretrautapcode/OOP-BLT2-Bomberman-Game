@@ -1,35 +1,40 @@
 package entities.DestroyAble;
 
+import control.Audio;
 import entities.Entity;
 import graphics.Sprite;
 import javafx.scene.image.Image;
+
 public abstract class DestroyAble extends Entity {
     protected int animation = 0;//Số lượng hoạt ảnh
     private long timeStart;//thời điểm bắt đầu xảy ra hiệu ứng phá hủy
     private long timeDestroy;//khoảng thời gian timeStart đến lúc bị phá hủy hoàn toàn
-    private boolean isDestroy=false;//isDestroy=true bắt đầu phá hủy, =false quá trình chưa bắt đầu
+    private boolean isDestroy = false;//isDestroy=true bắt đầu phá hủy, =false quá trình chưa bắt đầu
+
     public DestroyAble(double x, double y, Image img, long nanoSecond) {
-        super(x,y, img);
-        timeDestroy=nanoSecond;
+        super(x, y, img);
+        timeDestroy = nanoSecond;
     }
 
     public void setTimeDestroy(long timeDestroy) {
         this.timeDestroy = timeDestroy;
     }
+
     public void setIsDestroy(boolean isDestroy) {
-        if(!this.isDestroy&&isDestroy){
-            timeStart=System.nanoTime();
+        if (!this.isDestroy && isDestroy) {
+            timeStart = System.nanoTime();
         }
-        this.isDestroy=isDestroy;
+        this.isDestroy = isDestroy;
     }
-    public boolean getIsDestroy(){
+
+    public boolean getIsDestroy() {
         return isDestroy;
     }
+
     @Override
     public abstract void update();
 
     /**
-     *
      * @ Kiểm tra xem đối tượng đã phá hủy xong chưa
      */
     public boolean checkDestroy() {
@@ -46,5 +51,10 @@ public abstract class DestroyAble extends Entity {
         if (animation > 1000000) {
             animation = 0;
         }
+    }
+
+    public void destroy() {
+        Audio.entityDeathSound();
+        remove();
     }
 }

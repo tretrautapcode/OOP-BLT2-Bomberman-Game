@@ -1,6 +1,7 @@
 package entities.DestroyAble.Character;
 
 
+import control.Audio;
 import control.BombermanGame;
 import control.Setting;
 import control.MyList;
@@ -27,6 +28,7 @@ public class Bomber extends Character {
             Animation(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, 30);
             if (checkDestroy()) {
                 this.remove();
+                Audio.bomberDeathSound();
             }
         } else {
             move();
@@ -39,9 +41,15 @@ public class Bomber extends Character {
     public void setMaxCountBomb(int maxCountBomb) {
         this.maxCountBomb = maxCountBomb;
     }
-
+    private int time=25;
     public boolean move() {
-        super.move();
+        if(super.move()){
+            time--;
+            if(time==0) {
+                Audio.move();
+                time=25;
+            }
+        }
         if (!isMoving) {
             if (dx == 1) {
                 img.setImage(Sprite.player_right.getFxImage());
@@ -105,6 +113,7 @@ public class Bomber extends Character {
         BombermanGame.scene.setOnKeyReleased(event -> {
             isMoving = false;
             if (event.getCode() == KeyCode.SPACE&&countBomb<maxCountBomb) {
+                Audio.placeBomb();
                 Bomb bomb = new Bomb((int) (x * 2) - (int) x, (int) (y * 2) - (int) y, Sprite.bomb.getFxImage());
                 bomb.addToPane();
                 MyList.add(bomb);

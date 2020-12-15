@@ -35,8 +35,7 @@ public class Oneal extends Enemy {
         if (dx == 1 || dy == 1) {
             Animation(Sprite.oneal_right1, Sprite.oneal_right2, Sprite.oneal_right3, 30);
 
-        }
-        else {
+        } else {
             Animation(Sprite.oneal_left1, Sprite.oneal_left2, Sprite.oneal_left3, 30);
         }
         return super.move();
@@ -49,7 +48,8 @@ public class Oneal extends Enemy {
             }
         }
     }
-    public void findPath(){
+
+    public void findPath() {
         int intX = (int) x;
         int intY = (int) y;
         int X;
@@ -62,7 +62,7 @@ public class Oneal extends Enemy {
                 intY = intY + 1;
             }
             if (f[intX][intY] != -1) {
-                speed=Setting.speedOneal;
+                speed = Setting.speedOneal;
                 for (int i = 0; i < 4; ++i) {
                     X = intX + Dx[i];
                     Y = intY + Dy[i];
@@ -71,12 +71,13 @@ public class Oneal extends Enemy {
                         dy = Dy[i];
                     }
                 }
-            }else{
-                speed=Setting.speedBallom;
+            } else {
+                speed = Setting.speedBallom;
                 randomMove();
             }
         }
     }
+
     public void Bfs() {
         init();
         Queue<Point> queue = new LinkedList<>();

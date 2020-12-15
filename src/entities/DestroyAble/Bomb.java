@@ -1,5 +1,6 @@
 package entities.DestroyAble;
 
+import control.Audio;
 import control.Setting;
 import control.MyList;
 import graphics.Sprite;
@@ -71,6 +72,7 @@ public class Bomb extends DestroyAble {
                 break;
             }
         }
+        Audio.bombExplode();
         this.remove();
     }
 

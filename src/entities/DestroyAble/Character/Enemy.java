@@ -1,5 +1,6 @@
 package entities.DestroyAble.Character;
 
+import control.Audio;
 import control.MyList;
 import javafx.scene.image.Image;
 
@@ -23,6 +24,7 @@ public class Enemy extends Character {
         if (getIsDestroy()) {
             if (checkDestroy()) {
                 this.remove();
+                destroy();
             }
         } else {
             move();
