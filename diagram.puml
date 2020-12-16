@@ -1,0 +1,57 @@
+@startuml
+
+class Audio
+class BombermanGame
+class MyList
+class Point
+class Setting
+abstract class Entity
+class DestroyAble
+class Bomb
+class Brick
+class Flame
+class Entities
+class Sprite
+class SpriteSheet
+abstract class Character
+class Enemy
+class Balloom
+class Oneal
+class Bomber
+class Grass
+class Portal
+class Wall
+abstract class Item
+class BombItem
+class FlameItem
+class SpeedItem
+
+Application <|-- BombermanGame
+Entity <|-- DestroyAble
+DestroyAble <|-- Bomb
+DestroyAble <|-- Brick
+DestroyAble <|-- Flame
+DestroyAble <|-- Character
+DestroyAble <|-- Item
+Item <|-- BombItem
+Item <|-- SpeedItem
+Item <|-- FlameItem
+Character <|-- Enemy
+Character <|-- Bomber
+Enemy <|-- Balloom
+Enemy <|-- Oneal
+Entity <|-- Grass
+Entity <|-- Portal
+Entity <|-- Wall
+
+
+class Audio {
+{static} Clip backgroundMusic
+- {static} boolean isPlaying
+- Audio()
++ {static} void audioShut()
++ {static} void setIsPlaying(boolean input)
+
+}
+
+@enduml
