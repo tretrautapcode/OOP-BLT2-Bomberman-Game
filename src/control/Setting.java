@@ -18,5 +18,5 @@ public class Setting {
     public static double speedBomber = 0.05;
     public static double speedBallom = 0.02;
     public static double speedOneal = 0.05;
-    public static int maxLevel = 2;
+    public static int maxLevel = 3;
 }
