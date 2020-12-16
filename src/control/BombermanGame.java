@@ -5,30 +5,28 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import static com.sun.javafx.scene.control.skin.Utils.executeOnceWhenPropertyIsNonNull;
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
+import javafx.scene.text.Font;
 
 public class BombermanGame extends Application {
     public static Pane playerPane;
     public static Scene scene;
-    private static int level = 0;
-    private int Point = 0;
-    private int fps;
+    private static int point = 0;
+    private long fps = 0;
+    private int animation = 0;
     private static AnimationTimer gameLoop;
 
-    public void addPoint(int input) {
-        Point += input;
+    public static void addPoint(int input) {
+        point += input;
     }
 
     public static void main(String[] args) {
@@ -37,19 +35,35 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+        Label label = new Label();
+        label.setFont(new Font("Arial", 30));
+        label.setLayoutX(0);
+        label.setLayoutY(0);
+        label.setMaxSize(Sprite.SCALED_SIZE * Setting.WIDTH, Sprite.SCALED_SIZE);
         playerPane = new Pane();
+        playerPane.setLayoutY(Sprite.SCALED_SIZE);
         Group root = new Group();
-        root.getChildren().addAll(playerPane);
-        scene = new Scene(root, Sprite.SCALED_SIZE * Setting.WIDTH, Sprite.SCALED_SIZE * Setting.HEIGHT);
+        root.getChildren().addAll(label, playerPane);
+        scene = new Scene(root, Sprite.SCALED_SIZE * Setting.WIDTH, Sprite.SCALED_SIZE * (Setting.HEIGHT + 1));
 
         stage.setScene(scene);
 
         stage.show();
         MyList.loadMap();
+        render();
         Audio.playBackground();
         gameLoop = new AnimationTimer() {
+            long timeStart = 0;
+
             @Override
             public void handle(long now) {
+                animation++;
+                if (now - timeStart > 1000_000_000) {
+                    fps = animation / ((now - timeStart) / 1000_000_000);
+                    animation = 0;
+                    timeStart = now;
+                }
+                label.setText("Point: " + point + "     Fps: " + fps);
                 update();
                 render();
             }
@@ -90,6 +104,7 @@ public class BombermanGame extends Application {
             MyList.ballooms.get(i).update();
             if (MyList.ballooms.get(i).checkDestroy()) {
                 MyList.ballooms.remove(i);
+                point += 100;
             } else {
                 i++;
             }
@@ -98,6 +113,7 @@ public class BombermanGame extends Application {
             MyList.oneals.get(i).update();
             if (MyList.oneals.get(i).checkDestroy()) {
                 MyList.oneals.remove(i);
+                point += 200;
             } else {
                 i++;
             }
